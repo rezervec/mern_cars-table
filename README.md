@@ -16,7 +16,7 @@
 
 ###### DB.
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
-Документация Mongodb:
+- Документация Mongodb:
 https://www.mongodb.com/docs/
 
 ---
@@ -30,7 +30,7 @@ https://www.mongodb.com/docs/
 
 ---
 
-:black_small_square:
+
 
 ### Запуск:
 
@@ -38,6 +38,10 @@ https://www.mongodb.com/docs/
 
 В корневой папке:
 ```npm run server```
+
+---
+
+:black_small_square:
 
 ### Функционал:
 ---

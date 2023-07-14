@@ -12,11 +12,11 @@ const app = express()
 app.use(cors());
 app.use(express.json())
 app.use("/api/car", require('./routes/car'))
-// app.use('/', express.static(path.join(__dirname, 'public_html', 'build')))
+app.use('/', express.static(path.join(__dirname, 'public_html', 'build')))
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, 'public_html', 'build', 'index.html'))
-// })
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'public_html', 'build', 'index.html'))
+})
 
 const start = async () => {
   try {
