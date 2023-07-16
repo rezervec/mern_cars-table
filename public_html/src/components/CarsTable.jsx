@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
-import { convertIsoDate } from '../utils/convertDate'
+import { convertDateForSort, convertIsoDate } from '../utils/convertDate'
 import { consts } from '../utils/consts'
 
 
@@ -38,12 +38,20 @@ export const CarsTable = (cars, {carsCount}) => {
     {
       title: 'Стоимость',
       dataIndex: 'price',
-      key: 'price',
+      key: 'sort_price',
+      sorter: {
+        compare: (a, b) => b.sort_price - a.sort_price,
+        multiple: 2,
+      },
     },
     {
       title: 'Дата создания',
       dataIndex: 'date',
-      key: 'date',
+      key: 'sort_date',
+      sorter: {
+        compare: (a, b) => a.sort_date - b.sort_date,
+        multiple: 1, // сравнение дат будем производить в последнюю очередь
+      },
     },
   ];
 
@@ -63,11 +71,13 @@ export const CarsTable = (cars, {carsCount}) => {
             : obj.engine.transmission
           }
           (${obj.engine.power} л.с.)
-          ${obj.drive}
+          ${obj.drive === '2WD' ? '' : obj.drive}
         `
       newObj.equipment = obj.equipmentName
       newObj.price = `${obj.price.toLocaleString('ru')} ₽`
+      newObj.sort_price = obj.price
       newObj.date = convertIsoDate(obj.createdAt)
+      newObj.sort_date = convertDateForSort(obj.createdAt)
       allCars.push(newObj)
     });
     return allCars
@@ -88,9 +98,6 @@ export const CarsTable = (cars, {carsCount}) => {
     });
   }, [carsCount])
 
-  // useEffect(() => {
-  //   fetchCars();
-  // }, [JSON.stringify(tableParams)]);
 
   const handleTableChange = (pagination, filters, sorter) => {
     setTableParams({ pagination, filters, ...sorter, });

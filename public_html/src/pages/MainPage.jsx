@@ -3,23 +3,24 @@ import { ModelSelector } from '../components/ModelSelector'
 import { MarkSelector } from '../components/MarkSelector'
 import axios from 'axios'
 import { CarsTable } from '../components/CarsTable'
+import { consts } from '../utils/consts'
 
 export const MainPage = () => {
 
-  const [cars, setCars] = useState([])
-  const [marks, setMarks] = useState()
-  const [models, setModels] = useState()
+  const [cars, setCars] = useState([]) // автомобили
+  const [marks, setMarks] = useState() // марки
+  const [models, setModels] = useState() // модели
 
-  const [activeMark, setActiveMark] = useState()
-  const [activeModel, setActiveModel] = useState()
-  const [carsCount, setCarsCount] = useState()
+  const [activeMark, setActiveMark] = useState() // выбранная марка
+  const [activeModel, setActiveModel] = useState() // выбранные модели
+  const [carsCount, setCarsCount] = useState() // количество автомобилей полученных с сервера
 
 
-  const fetchCars = () =>{
+  const fetchCars = () => {
     (
-      !activeMark ? axios.get(`http://localhost:555/api/car/display/`)
-    : !activeModel ? axios.get(`http://localhost:555/api/car/display/?mark=${activeMark}`)
-    : axios.get(`http://localhost:555/api/car/display/?mark=${activeMark}&model=${activeModel}`)
+      !activeMark ? axios.get(`${consts.MAIN_URL}/api/car/display/`)
+    : !activeModel ? axios.get(`${consts.MAIN_URL}/api/car/display/?mark=${activeMark}`)
+    : axios.get(`${consts.MAIN_URL}/api/car/display/?mark=${activeMark}&model=${activeModel}`)
     )
     .then((cars)=>{
       const response = cars.data
@@ -33,6 +34,7 @@ export const MainPage = () => {
     })
   }
 
+  // при смене марки или модели делаем новый запрос
   useEffect(() => {
     fetchCars();
   }, [activeMark, activeModel])

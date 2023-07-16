@@ -12,6 +12,11 @@ export const ModelSelector = ({models, activeModel, setActiveModel}) => {
     setActiveModel(value)
   };
 
+  // содержит ли массив обектов указанный объект? Если содержит верни true
+  const haveObjInArr = (obj, arr) => {
+    return arr.filter(i => i.value === obj.value).length > 0
+  }
+
   // преобразуем данные с бэка в нужный для antd-селектора вид
   const makeDataForSelector = (options) => {
     const arr = []
@@ -19,7 +24,10 @@ export const ModelSelector = ({models, activeModel, setActiveModel}) => {
       const obj = {}
       obj.value = el
       obj.label = el
-      arr.push(obj)
+      // если модель не повторяется то мы её добавляем
+      if (!haveObjInArr(obj, arr)) {
+        arr.push(obj)
+      }
     });
     return arr
   }
@@ -28,7 +36,6 @@ export const ModelSelector = ({models, activeModel, setActiveModel}) => {
     if(models) {
       setNewModels( makeDataForSelector(models) )
     }
-    console.log(newModels)
   }, [models])
 
   // если данные не получены то возвращаем лоадер

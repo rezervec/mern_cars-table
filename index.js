@@ -26,6 +26,7 @@ const start = async () => {
     })
     .then(()=> console.log('-== DB CONNECTION SUCCESSFUL ==-'))
     .catch((error)=> console.log('!!! Database Error: ', error.message));
+    
     app.listen(PORT, () => console.log(`-== APP START ON PORT: ${PORT} ==-`))
   } catch (error) {
     console.log('!!! Server Error: ', error.message)

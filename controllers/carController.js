@@ -1,38 +1,37 @@
 const Car = require("../models/car");
 
+// Если нужно будет добавить авто:
+// exports.createCar = async (req, res, next) => {
 
-exports.createCar = async (req, res, next) => {
+//   const { mark, model, engine, drive, equipmentName, price } = req.body;
 
-  const { mark, model, engine, drive, equipmentName, price } = req.body;
+//   try {
+//     const car = await Car.create({
+//       mark,
+//       model,
+//       engine: {
+//         power: engine.power,
+//         volume: engine.volume,
+//         transmission: engine.transmission,
+//         fuel: engine.fuel
+//       },
+//       drive,
+//       equipmentName,
+//       price,
+//     });
+//     res.status(201).json({ car })
 
-  try {
-    const car = await Car.create({
-      mark,
-      model,
-      engine: {
-        power: engine.power,
-        volume: engine.volume,
-        transmission: engine.transmission,
-        fuel: engine.fuel
-      },
-      drive,
-      equipmentName,
-      price,
-    });
-    res.status(201).json({ car })
-
-  } catch (error) {
-    console.log(error.message);
-    next(error);
-  }
-}
+//   } catch (error) {
+//     console.log(error.message);
+//     next(error);
+//   }
+// }
 
 
 exports.displayCars = async (req, res, next) => {
-
-  // const carsPerPage = 5 // кол-во отображаемых авто на одной странице
-  // const pageNumber = Number(req.query.pageNumber) || 1; // номер активной страницы
-  let carsCount = await Car.find({}).estimatedDocumentCount(); // количество машин
+  
+  // находим количество всех автомобилей 
+  let carsCount = await Car.find({}).estimatedDocumentCount();
   
   let mark = req.query.mark || "All"
   let model = req.query.model || "All"
